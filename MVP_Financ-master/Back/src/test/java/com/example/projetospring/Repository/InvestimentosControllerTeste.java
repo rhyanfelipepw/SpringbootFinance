@@ -12,17 +12,17 @@ import com.example.projetospring.model.Investimentos;
 
         import static org.assertj.core.api.Assertions.assertThat;
         import static org.assertj.core.api.Assertions.assertThatObject;
-
+@SpringBootTest
 class InvestimentosControllerTeste {
-    @Autowired
 
+    @Autowired
     private InvestimentosRepository repository;
     //INVESTIMENTOS
     @Test
     public void Saveteste (){
         Investimentos teste = new Investimentos(null, "", 200.0,100.0, 100.0,100.0);
         repository.save(teste);
-        repository.findByid(teste.getId_investimento());
+       assertThatObject( repository.findById(teste.getId_investimento()).equals(teste));
     }
 
     @Test
