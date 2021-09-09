@@ -22,22 +22,23 @@ class InvestimentosControllerTeste {
     public void Saveteste (){
         Investimentos teste = new Investimentos(null, "", 200.0,100.0, 100.0,100.0);
         repository.save(teste);
-       assertThatObject( repository.findById(teste.getId_investimento()).equals(teste));
+        assertThatObject( repository.findById(teste.getId_investimento()).equals(teste));
     }
-
     @Test
     public void EditTeste (){
         Investimentos teste = new Investimentos(null, "", 200.0,100.0, 100.0,100.0);
-        repository.save(teste);
-        Optional<Investimentos> find = repository.findById(teste.getId_investimento());
-        assertThatObject(teste).isEqualTo(find);
+        Investimentos testeSave = repository.save(teste);
+        testeSave.setTipo_investimento("editado");
+        testeSave = repository.save(testeSave);
+        assertThatObject(repository.findById(testeSave.getId_investimento())).equals(testeSave);
     }
     @Test
     public void DeleteTeste (){
         Investimentos teste = new Investimentos(null, "", 200.0,100.0, 100.0,100.0);
         repository.deleteById(teste.getId_investimento());
         Optional<Investimentos> getInvest  = repository.findById(teste.getId_investimento());
-        assertThat(getInvest == null);
+        assertThat(!getInvest.isPresent());
+
     }
 
     @Test
